@@ -45,7 +45,6 @@ namespace BMSSender.Tests
             List<IGenerator> paramterlist = new List<IGenerator>();
             paramterlist.Add(null);
             paramterlist.Add(null);
-            testdisplaymethod.DisplayBatteryChargingParameter(paramterlist);
             var exception = Record.Exception(() => testdisplaymethod.DisplayBatteryChargingParameter(paramterlist));
             Assert.NotNull(exception);
         }
