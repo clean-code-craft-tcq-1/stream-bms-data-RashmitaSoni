@@ -30,11 +30,22 @@ namespace BMSSender.Tests
             Assert.IsFalse(BatteryChargingParametersStreamer.IsParameterListEmpty(paramterslist));
         }
         [TestMethod]
-        public void WhenDisplayBatteryChargingParameterIsNotValid_ThenReturnsException()
+        public void WhenBatteryChargingParameterToStreamerIsNotValid_ThenReturnsExceptionMessage()
         {
-            //IStreamer bmsdata = new BatteryChargingParametersStreamer();
-            //bmsdata.DisplayBatteryChargingParameter(null, null);
-            //Assert.Throws<Exception>(() => bmsdata.DisplayBatteryChargingParameter(null, null));
+            try
+            {
+                IStreamer testbmsdata = new BatteryChargingParametersStreamer();
+                List<IGenerator> paramterlist = new List<IGenerator>();
+                paramterlist.Add(null);
+                paramterlist.Add(null);
+                testbmsdata.StreamBatteryChargingParameter(paramterlist);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+
         }
     }
 }
