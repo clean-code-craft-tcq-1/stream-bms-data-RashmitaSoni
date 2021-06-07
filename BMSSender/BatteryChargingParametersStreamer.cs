@@ -15,8 +15,6 @@ namespace BMSSender
         }
         public void StreamBatteryChargingParameter(List<IGenerator> chargingparameter)
         {
-            try
-            {
                 if (!IsParameterListEmpty(chargingparameter))
                 {
                     Console.WriteLine("Battery Charging Parameters (Press Escape to exit)\n");
@@ -25,11 +23,6 @@ namespace BMSSender
                         DisplayBatteryChargingParameter(chargingparameter);
                     } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Please pass valid Battery Parameters");
-            }
         }
         public void DisplayBatteryChargingParameter(List<IGenerator> chargingparameter)
         {
@@ -49,7 +42,7 @@ namespace BMSSender
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Please pass valid Battery Parameters");
+                throw ex;
             }
         }
     }
