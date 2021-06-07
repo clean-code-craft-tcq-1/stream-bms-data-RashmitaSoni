@@ -36,7 +36,7 @@ namespace BMSSender.Tests
             paramterlist.Add(null);
             paramterlist.Add(null);
             var exception = Record.Exception(() => testbmsdata.StreamBatteryChargingParameter(paramterlist));
-            Assert.NotNull(exception);
+            Assert.Null(exception);
         }
         [Fact]
         public void WhenDisplayFunctionIsNotValid_ThenReturnsExceptionMessage()
@@ -47,7 +47,7 @@ namespace BMSSender.Tests
                 paramterlist.Add(null);
                 testdisplaymethod.DisplayBatteryChargingParameter(paramterlist);
                 var exception = Record.Exception(() => testdisplaymethod.DisplayBatteryChargingParameter(paramterlist));
-                Assert.NotNull(exception);
+                Assert.Null(exception);
         }
     }
 }
