@@ -14,8 +14,7 @@ namespace BMSSender
             List<IGenerator> paramterslist = new List<IGenerator>();
             paramterslist.Add(new BatteryChargingParametersGenerator());
             paramterslist.Add(new BatteryChargingParametersGenerator());
-            bmsdata.DisplayBatteryChargingParameter(paramterslist);
-           
+            bmsdata.StreamBatteryChargingParameter(paramterslist);
         }
     }
 }
