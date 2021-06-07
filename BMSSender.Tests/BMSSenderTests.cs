@@ -1,66 +1,53 @@
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BMSSender;
 using System.Collections.Generic;
+using Xunit;
 
 namespace BMSSender.Tests
 {
-    [TestClass]
     public class BMSSenderTests
     {
-        [TestMethod]
+        [Fact]
         public void WhenGenerateBatteryChargingParameterValid_ThenReturnsTrue()
         {
             IGenerator value = new BatteryChargingParametersGenerator();
             double _value = value.GenerateBatteryChargingParameter(0, 12);
-            Assert.IsTrue(_value >= 0|| _value <= 12);
+            Assert.True(_value >= 0|| _value <= 12);
         }
-        [TestMethod]
+        [Fact]
         public void WhenParameterListIsEmpty_ThenReturnsTrue()
         {
             List<IGenerator> parameterslist = new List<IGenerator>();
-            Assert.IsTrue(BatteryChargingParametersStreamer.IsParameterListEmpty(parameterslist));
+            Assert.True(BatteryChargingParametersStreamer.IsParameterListEmpty(parameterslist));
         }
-        [TestMethod]
+        [Fact]
         public void WhenParameterListIsNotEmpty_ThenReturnsFalse()
         {
             List<IGenerator> paramterslist = new List<IGenerator>();
             paramterslist.Add(new BatteryChargingParametersGenerator());
             paramterslist.Add(new BatteryChargingParametersGenerator());
-            Assert.IsFalse(BatteryChargingParametersStreamer.IsParameterListEmpty(paramterslist));
+            Assert.False(BatteryChargingParametersStreamer.IsParameterListEmpty(paramterslist));
         }
-        [TestMethod]
+        [Fact]
         public void WhenBatteryChargingParameterToStreamerIsNotValid_ThenReturnsExceptionMessage()
         {
-            try
-            {
-                IStreamer testbmsdata = new BatteryChargingParametersStreamer();
-                List<IGenerator> paramterlist = new List<IGenerator>();
-                paramterlist.Add(null);
-                paramterlist.Add(null);
-                testbmsdata.StreamBatteryChargingParameter(paramterlist);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
+            IStreamer testbmsdata = new BatteryChargingParametersStreamer();
+            List<IGenerator> paramterlist = new List<IGenerator>();
+            paramterlist.Add(null);
+            paramterlist.Add(null);
+            var exception = Record.Exception(() => testbmsdata.StreamBatteryChargingParameter(paramterlist));
+            Assert.NotNull(exception);
         }
-        [TestMethod]
+        [Fact]
         public void WhenDisplayFunctionIsNotValid_ThenReturnsExceptionMessage()
         {
-            try
-            {
                 BatteryChargingParametersStreamer testdisplaymethod = new BatteryChargingParametersStreamer();
                 List<IGenerator> paramterlist = new List<IGenerator>();
                 paramterlist.Add(null);
                 paramterlist.Add(null);
                 testdisplaymethod.DisplayBatteryChargingParameter(paramterlist);
-            }
-            catch (Exception e)
-            {
-                Assert.Fail(e.Message);
-            }
+                var exception = Record.Exception(() => testdisplaymethod.DisplayBatteryChargingParameter(paramterlist));
+                Assert.NotNull(exception);
         }
     }
 }
