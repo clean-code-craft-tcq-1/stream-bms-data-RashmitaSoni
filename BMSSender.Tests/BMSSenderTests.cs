@@ -45,7 +45,22 @@ namespace BMSSender.Tests
             {
                 Assert.Fail(ex.Message);
             }
-
+        }
+        [TestMethod]
+        public void WhenDisplayFunctionIsNotValid_ThenReturnsExceptionMessage()
+        {
+            try
+            {
+                BatteryChargingParametersStreamer testdisplaymethod = new BatteryChargingParametersStreamer();
+                List<IGenerator> paramterlist = new List<IGenerator>();
+                paramterlist.Add(null);
+                paramterlist.Add(null);
+                testdisplaymethod.DisplayBatteryChargingParameter(paramterlist);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
         }
     }
 }
