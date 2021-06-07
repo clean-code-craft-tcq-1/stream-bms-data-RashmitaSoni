@@ -1,49 +1,53 @@
 using System;
+using BMSSender;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Xunit;
 
-namespace BMSSender
+namespace BMSSender.Tests
 {
-    public class BatteryChargingParametersStreamer : IStreamer
+    public class BMSSenderTests
     {
-        public static bool IsParameterListEmpty(List<IGenerator> chargingparameterlist)
+        [Fact]
+        public void WhenGenerateBatteryChargingParameterValid_ThenReturnsTrue()
         {
-            return (!chargingparameterlist.Any());
+            IGenerator value = new BatteryChargingParametersGenerator();
+            double _value = value.GenerateBatteryChargingParameter(0, 12);
+            Assert.True(_value >= 0|| _value <= 12);
         }
-        public void StreamBatteryChargingParameter(List<IGenerator> chargingparameter)
+        [Fact]
+        public void WhenParameterListIsEmpty_ThenReturnsTrue()
         {
-                if (!IsParameterListEmpty(chargingparameter))
-                {
-                    Console.WriteLine("Battery Charging Parameters (Press Escape to exit)\n");
-                    do
-                    {
-                        DisplayBatteryChargingParameter(chargingparameter);
-                    } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
-                }
+            List<IGenerator> parameterslist = new List<IGenerator>();
+            Assert.True(BatteryChargingParametersStreamer.IsParameterListEmpty(parameterslist));
         }
-        public void DisplayBatteryChargingParameter(List<IGenerator> chargingparameter)
+        [Fact]
+        public void WhenParameterListIsNotEmpty_ThenReturnsFalse()
         {
-            try
-            {
-                while (!Console.KeyAvailable)
-                {
-                    Console.WriteLine("Temperature : {0}\tState of Charge : {1}",
-                        chargingparameter[0].GenerateBatteryChargingParameter(BatteryParametersConstants.minimumChargingTemprature_Celsius,
-                                                                     BatteryParametersConstants.maximumChargingTemprature_Celsius),
-
-                        chargingparameter[1].GenerateBatteryChargingParameter(BatteryParametersConstants.minimumStateOfCharge_Percentage,
-                                                             BatteryParametersConstants.maximumStateOfCharge_Percentage)
-                        );
-                    Thread.Sleep(2000);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            List<IGenerator> paramterslist = new List<IGenerator>();
+            paramterslist.Add(new BatteryChargingParametersGenerator());
+            paramterslist.Add(new BatteryChargingParametersGenerator());
+            Assert.False(BatteryChargingParametersStreamer.IsParameterListEmpty(paramterslist));
+        }
+        [Fact]
+        public void WhenBatteryChargingParameterToStreamerIsNotValid_ThenReturnsExceptionMessage()
+        {
+            IStreamer testbmsdata = new BatteryChargingParametersStreamer();
+            List<IGenerator> paramterlist = new List<IGenerator>();
+            paramterlist.Add(null);
+            paramterlist.Add(null);
+            var exception = Record.Exception(() => testbmsdata.StreamBatteryChargingParameter(paramterlist));
+            Assert.NotNull(exception);
+        }
+        [Fact]
+        public void WhenDisplayFunctionIsNotValid_ThenReturnsExceptionMessage()
+        {
+            BatteryChargingParametersStreamer testdisplaymethod = new BatteryChargingParametersStreamer();
+            List<IGenerator> paramterlist = new List<IGenerator>();
+            paramterlist.Add(null);
+            paramterlist.Add(null);
+            testdisplaymethod.DisplayBatteryChargingParameter(paramterlist);
+            var exception = Record.Exception(() => testdisplaymethod.DisplayBatteryChargingParameter(paramterlist));
+            Assert.NotNull(exception);
         }
     }
 }
