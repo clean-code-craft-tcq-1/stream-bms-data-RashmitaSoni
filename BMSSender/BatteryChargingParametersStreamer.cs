@@ -13,7 +13,7 @@ namespace BMSSender
         {
             return (!chargingparameterlist.Any());
         }
-        public void DisplayBatteryChargingParameter(List<IGenerator> chargingparameter)
+        public void StreamBatteryChargingParameter(List<IGenerator> chargingparameter)
         {
             if (!IsParameterListEmpty(chargingparameter))
             {
