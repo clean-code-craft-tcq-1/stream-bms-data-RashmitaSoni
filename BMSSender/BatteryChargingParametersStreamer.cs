@@ -15,18 +15,27 @@ namespace BMSSender
         }
         public void StreamBatteryChargingParameter(List<IGenerator> chargingparameter)
         {
-            if (!IsParameterListEmpty(chargingparameter))
+            try
             {
-                Console.WriteLine("Battery Charging Parameters (Press Escape to exit)\n");
-                do
+                if (!IsParameterListEmpty(chargingparameter))
                 {
-                    DisplayBatteryChargingParameter(chargingparameter);
-                } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+                    Console.WriteLine("Battery Charging Parameters (Press Escape to exit)\n");
+                    do
+                    {
+                        DisplayBatteryChargingParameter(chargingparameter);
+                    } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Please pass valid Battery Parameters");
             }
         }
         public void DisplayBatteryChargingParameter(List<IGenerator> chargingparameter)
         {
-            while (!Console.KeyAvailable)
+            try
+            {
+                while (!Console.KeyAvailable)
                 {
                     Console.WriteLine("Temperature : {0}\tState of Charge : {1}",
                         chargingparameter[0].GenerateBatteryChargingParameter(BatteryParametersConstants.minimumChargingTemprature_Celsius,
@@ -37,7 +46,11 @@ namespace BMSSender
                         );
                     Thread.Sleep(2000);
                 }
-            return;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Please pass valid Battery Parameters");
+            }
         }
     }
 }
