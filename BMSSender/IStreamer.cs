@@ -8,6 +8,6 @@ namespace BMSSender
 {
     public interface IStreamer
     {
-        void DisplayBatteryChargingParameter(List<IGenerator> chargingparameter);
+        void StreamBatteryChargingParameter(List<IGenerator> chargingparameter);
     }
 }
