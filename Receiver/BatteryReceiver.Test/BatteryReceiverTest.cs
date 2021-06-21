@@ -21,7 +21,7 @@ namespace BatteryReceiver.Test
         {
             BatteryReceiverParser batteryReceiverParser = new BatteryReceiverParser();
             List<BatteryConstants> batteryConstants;
-            List<string> inputStream = new List<string>() { "Temperature : 10  State of Charge : 0.4" };
+            List<string> inputStream = new List<string>() { "Temperature : 10\tState of Charge : 0.4" };
             batteryConstants = batteryReceiverParser.GetBatteryReadingsFromInput(inputStream);
             Assert.IsNotNull(batteryConstants);
         }
@@ -30,7 +30,7 @@ namespace BatteryReceiver.Test
         {
             BatteryReceiverCalculator batteryReceiverCalculator = new BatteryReceiverCalculator(_batteryParser);
             BatteryParameters batteryParameters;
-            string inputStream = "Temperature : 10  State of Charge : 0.4";
+            string inputStream = "Temperature : 10\tState of Charge : 0.4";
             batteryParameters = batteryReceiverCalculator.GetMinMaxBatteryReadings(inputStream);
             Assert.IsTrue(10 == batteryParameters.Temperature.maxTemperature);
         }
@@ -40,7 +40,7 @@ namespace BatteryReceiver.Test
         {
             BatteryReceiverCalculator batteryReceiverCalculator = new BatteryReceiverCalculator(_batteryParser);
             BatteryParameters batteryParameters;
-            List<string> inputStream = new List<string>() { "Temperature : 10  State of Charge : 0.4", "Temperature : 20  State of Charge : 0.6" };
+            List<string> inputStream = new List<string>() { "Temperature : 10\tState of Charge : 0.4", "Temperature : 20\tState of Charge : 0.6" };
             batteryParameters = batteryReceiverCalculator.GetAverageBatteryReadings(inputStream);
             Assert.IsTrue(15 == batteryParameters.Temperature.TemperatureAverage);
         }
