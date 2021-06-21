@@ -19,9 +19,9 @@ namespace BatteryReceiver
                 BatteryReadingInputSet.Add(StreamReading);
                 batteryParameters = batteryReceiverCalculator.GetMinMaxBatteryReadings(StreamReading);
                 displayBatteryReading.DisplayMinMaxBatteryReadings(batteryParameters);
-                if(BatteryReadingInputSet.Count >= 5)
+                if (BatteryReadingInputSet.Count >= 5)
                 {
-                    batteryParameters = batteryReceiverCalculator.GetAverageBatteryReadings(BatteryReadingInputSet);
+                    batteryParameters = batteryReceiverCalculator.GetAverageBatteryReadings(BatteryReadingInputSet.GetRange(BatteryReadingInputSet.Count - 4, 4));
                     displayBatteryReading.DisplayAverageBatteryReadings(batteryParameters);
                 }
             }

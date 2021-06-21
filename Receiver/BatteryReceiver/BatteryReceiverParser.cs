@@ -14,29 +14,23 @@ namespace BatteryReceiver
             {
                 return null;
             }
-            foreach ( string reading in BatteryReadings)
+            foreach (string reading in BatteryReadings)
             {
                 BatteryConstants batteryConstantValues = new BatteryConstants();
-                string[] batteryReadingValue = reading.Split(" ");
+                string[] batteryReadingValue = reading.Split('\t');
                 GetValue(batteryReadingValue);
-                batteryConstantValues.Temperature = (float)Convert.ToDouble(TemperatureValue);
-                batteryConstantValues.StateOfCharge = (float)Convert.ToDouble(StateOfChargeValue);
+                batteryConstantValues.Temperature = float.Parse(TemperatureValue);
+                batteryConstantValues.StateOfCharge = float.Parse(StateOfChargeValue);
                 batteryConstants.Add(batteryConstantValues);
             }
             return batteryConstants;
         }
         public void GetValue(string[] batteryReading)
         {
-            for ( int i = 0; i < batteryReading.Length; i++)
-            {
-                if (batteryReading[i] == "Temperature")
-                {
-                    TemperatureValue = batteryReading[i + 2];
-                    break;
-                }
-            }
-            StateOfChargeValue = batteryReading[batteryReading.Length - 1];
-        }
-        
+            string[] temp = batteryReading[0].Split(":");
+            TemperatureValue = temp[1].Trim();
+            string[] soc = batteryReading[1].Split(":");
+            StateOfChargeValue = soc[1].Trim();
+        }   
     }
 }
