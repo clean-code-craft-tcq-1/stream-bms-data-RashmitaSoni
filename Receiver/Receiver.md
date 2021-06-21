@@ -22,3 +22,8 @@ Program.cs -
     Minimum Temperature - 0 Maximum Temperature - 0
     Minimum StateOfCharge - 0.51 Maximum StateOfCharge - 0.73
     Average Temperature - 0 Average StateOfCharge - 0.64
+
+
+BatteryReceiverParser.cs - Gets the input from the Sender and stores the values.
+
+BatteryReceiverCalculator.cs - Provides the functions for all the required calculations
