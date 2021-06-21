@@ -15,7 +15,7 @@ namespace BatteryReceiver
             List<string> BatteryReadingInputSet = new List<string>();
             while ((StreamReading = Console.ReadLine()) != null && (StreamReading = Console.ReadLine()) != "Battery Charging Parameters (Press Escape to exit)")
             {
-                Console.In.Peek();
+                System.Threading.Thread.Sleep(1000);
                 Console.WriteLine(StreamReading);
                 BatteryReadingInputSet.Add(StreamReading);
                 batteryParameters = batteryReceiverCalculator.GetMinMaxBatteryReadings(StreamReading);
