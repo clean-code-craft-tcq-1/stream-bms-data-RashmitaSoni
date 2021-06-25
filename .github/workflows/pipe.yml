@@ -22,5 +22,5 @@ jobs:
     # Run the pipe app
     - name: Run the Sender and Receiver App
       shell: cmd  
-      timeout-minutes: 5
+      timeout-minutes: 6
       run: call pipe.bat
