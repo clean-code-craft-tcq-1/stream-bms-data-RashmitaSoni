@@ -10,39 +10,35 @@ namespace BatteryReceiver.Test
         [TestMethod]
         public void GivenEmptyReadings_WhenBatteryReadingIsNull_ReturnNull()
         {
-            BatteryReceiverParser batteryReceiverParser = new BatteryReceiverParser();
-            List<BatteryConstants> batteryConstants;
             List<string> inputStream = new List<string>() { };
-            batteryConstants = batteryReceiverParser.GetBatteryReadingsFromInput(inputStream);
-            Assert.IsNull(batteryConstants);
+            Assert.IsNull(new BatteryReceiverParser().GetBatteryReadingsFromInput(inputStream));
         }
         [TestMethod]
-        public void GivenBatteryReadings_WhenBatteryreadingListIsValid_ReturnNotNull()
+        public void GivenBatteryReadings_WhenBatteryReadingListIsValid_ReturnNotNull()
         {
-            BatteryReceiverParser batteryReceiverParser = new BatteryReceiverParser();
-            List<BatteryConstants> batteryConstants;
             List<string> inputStream = new List<string>() { "Temperature : 10\tState of Charge : 0.4" };
-            batteryConstants = batteryReceiverParser.GetBatteryReadingsFromInput(inputStream);
-            Assert.IsNotNull(batteryConstants);
+            Assert.IsNotNull(new BatteryReceiverParser().GetBatteryReadingsFromInput(inputStream));
         }
         [TestMethod]
-        public void GivenBatteryReadings_WhenBatteryreadingListIsValid_ReturnMaximumTemperature()
+        public void GivenBatteryReadings_WhenBatteryReadingListHasValues_ReturnMaximumTemperature()
         {
             BatteryReceiverCalculator batteryReceiverCalculator = new BatteryReceiverCalculator(_batteryParser);
-            BatteryParameters batteryParameters;
             string inputStream = "Temperature : 10\tState of Charge : 0.4";
-            batteryParameters = batteryReceiverCalculator.GetMinMaxBatteryReadings(inputStream);
-            Assert.IsTrue(10 == batteryParameters.Temperature.maxTemperature);
+            Assert.IsTrue(10 == batteryReceiverCalculator.GetMinMaxBatteryReadings(inputStream).Temperature.maxTemperature);
         }
-
         [TestMethod]
-        public void GivenBatteryReadings_WhenBatteryreadingListIsValid_ReturnAverageCount()
+        public void GivenBatteryReadings_WhenBatteryReadingListHasValues_ReturnMinimumTemperature()
         {
             BatteryReceiverCalculator batteryReceiverCalculator = new BatteryReceiverCalculator(_batteryParser);
-            BatteryParameters batteryParameters;
+            string inputStream = "Temperature : 10\tState of Charge : 0.4";
+            Assert.IsTrue(10 == batteryReceiverCalculator.GetMinMaxBatteryReadings(inputStream).Temperature.minTemperature);
+        }
+        [TestMethod]
+        public void GivenBatteryReadings_WhenBatteryReadingListHasValues_ReturnAverageCount()
+        {
+            BatteryReceiverCalculator batteryReceiverCalculator = new BatteryReceiverCalculator(_batteryParser);
             List<string> inputStream = new List<string>() { "Temperature : 10\tState of Charge : 0.4", "Temperature : 20\tState of Charge : 0.6" };
-            batteryParameters = batteryReceiverCalculator.GetAverageBatteryReadings(inputStream);
-            Assert.IsTrue(15 == batteryParameters.Temperature.TemperatureAverage);
+            Assert.IsTrue(15 == batteryReceiverCalculator.GetAverageBatteryReadings(inputStream).Temperature.TemperatureAverage);
         }
     }
 }
