@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace BatteryReceiver
@@ -26,9 +26,9 @@ namespace BatteryReceiver
         public static void StreamBatteryReadings(List<string> BatteryReadingInputSet, BatteryParameters batteryParameters, BatteryReceiverCalculator batteryReceiverCalculator, DisplayBatteryReading displayBatteryReading)
         {
             displayBatteryReading.DisplayMinMaxBatteryReadings(batteryParameters);
-            if (BatteryReadingInputSet.Count >= 5)
+            if (BatteryReadingInputSet.Count > 5)
             {
-                batteryParameters = batteryReceiverCalculator.GetAverageBatteryReadings(BatteryReadingInputSet.GetRange(BatteryReadingInputSet.Count - 4, 4));
+                batteryParameters = batteryReceiverCalculator.GetAverageBatteryReadings(BatteryReadingInputSet.GetRange(BatteryReadingInputSet.Count - 5, 5));
                 displayBatteryReading.DisplayAverageBatteryReadings(batteryParameters);
             }
         }
