@@ -20,7 +20,7 @@ jobs:
         fetch-depth: 0
 
     # Run the pipe app
-    - name: Run the App
+    - name: Run the Sender and Receiver App
       shell: cmd  
-      timeout-minutes: 1
+      timeout-minutes: 4
       run: call pipe.bat
